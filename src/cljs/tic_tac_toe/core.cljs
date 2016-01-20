@@ -1,19 +1,36 @@
 (ns tic-tac-toe.core
-    (:require [reagent.core :as reagent :refer [atom]]
-              [reagent.session :as session]
-              [secretary.core :as secretary :include-macros true]
-              [accountant.core :as accountant]))
+  (:require [reagent.core :as reagent :refer [atom]]
+            [reagent.session :as session]
+            [secretary.core :as secretary :include-macros true]
+            [accountant.core :as accountant]
+            [tic-tac-toe.game :as game]))
 
 ;; -------------------------
 ;; Views
 
-(defn home-page []
-  [:div [:h2 "Welcome to tic-tac-toe"]
-   [:div [:a {:href "/about"} "go to about page"]]])
+(def n 3)
 
-(defn about-page []
-  [:div [:h2 "About tic-tac-toe"]
-   [:div [:a {:href "/"} "go to the home page"]]])
+(defn game-board []
+  (let [board (reagent/atom (game/init-board n))]
+    [:div
+     [:table
+      [:tbody
+       (for [y (range 0 n)]
+         [:tr
+          (for [x (range 0 n)]
+            [:td
+             [:div {:style    {:font-size       "8em"
+                               :backgroundColor "#deadbeef"
+                               :width           "2em"
+                               :height          "2em"
+                               :text-align      "center"
+                               :border-style    "solid"}
+                    :on-click #(js/console.log (str (swap! board game/make-move x y "x")))}
+              [:p (get x (get y @board))]]])])]]]))
+lm
+(defn game-page []
+  [:div
+   (game-board)])
 
 (defn current-page []
   [:div [(session/get :current-page)]])
@@ -22,10 +39,7 @@
 ;; Routes
 
 (secretary/defroute "/" []
-  (session/put! :current-page #'home-page))
-
-(secretary/defroute "/about" []
-  (session/put! :current-page #'about-page))
+                    (session/put! :current-page #'game-page))
 
 ;; -------------------------
 ;; Initialize app
