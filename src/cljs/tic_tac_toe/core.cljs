@@ -11,7 +11,7 @@
 (def n 3)
 
 (defn game-board []
-  (let [board (reagent/atom (game/init-board n))]
+  (let [game (reagent/atom (game/init n))]
     [:div
      [:table
       [:tbody
@@ -22,14 +22,14 @@
             ^{:key (str "cell" + x + y)}
             [:td
              [:input {:type     "button"
-                      :value    (get x (get y @board))
+                      :value    (game/get-val @game x y)
                       :style    {:font-size       "8em"
                                  :backgroundColor "#deadbeef"
                                  :width           "1em"
                                  :height          "1em"
                                  :text-align      "center"
                                  :border-style    "solid"}
-                      :on-click #(js/console.log (str (swap! board game/make-move x y "x")))}]])])]]]))
+                      :on-click #(js/console.log (str (swap! game game/make-move x y)))}]])])]]]))
 
 (defn game-page []
   [:div
