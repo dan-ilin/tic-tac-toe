@@ -15,10 +15,10 @@
     [:div
      [:table
       [:tbody
-       (doall (for [y (range 0 n)]
+       (for [y (range 0 n)]
          ^{:key (str "row" + y)}
          [:tr
-          (doall (for [x (range 0 n)]
+          (for [x (range 0 n)]
             ^{:key (str "cell" + x + y)}
             [:td
              [:input {:type     "button"
@@ -29,7 +29,7 @@
                                  :height          "1em"
                                  :text-align      "center"
                                  :border-style    "solid"}
-                      :on-click #(js/console.log (str (swap! board game/make-move x y "x")))}]]))]))]]]))
+                      :on-click #(js/console.log (str (swap! board game/make-move x y "x")))}]])])]]]))
 
 (defn game-page []
   [:div
