@@ -16,8 +16,10 @@
      [:table
       [:tbody
        (for [y (range 0 n)]
+         ^{:key (str "row" + y)}
          [:tr
           (for [x (range 0 n)]
+            ^{:key (str "cell" + x + y)}
             [:td
              [:div {:style    {:font-size       "8em"
                                :backgroundColor "#deadbeef"
@@ -27,7 +29,7 @@
                                :border-style    "solid"}
                     :on-click #(js/console.log (str (swap! board game/make-move x y "x")))}
               [:p (get x (get y @board))]]])])]]]))
-lm
+
 (defn game-page []
   [:div
    (game-board)])
