@@ -9,27 +9,29 @@
 ;; Views
 
 (def n 3)
+(def game (reagent/atom (game/init n)))
 
 (defn game-board []
-  (let [game (reagent/atom (game/init n))]
-    [:div
-     [:table
-      [:tbody
-       (for [y (range 0 n)]
-         ^{:key (str "row" + y)}
-         [:tr
-          (for [x (range 0 n)]
-            ^{:key (str "cell" + x + y)}
-            [:td
-             [:input {:type     "button"
-                      :value    (game/get-val @game x y)
-                      :style    {:font-size       "8em"
-                                 :backgroundColor "#deadbeef"
-                                 :width           "1em"
-                                 :height          "1em"
-                                 :text-align      "center"
-                                 :border-style    "solid"}
-                      :on-click #(js/console.log (str (swap! game game/make-move x y)))}]])])]]]))
+  @game
+  [:div
+   [:table
+    [:tbody
+     (for [y (range 0 n)]
+       ^{:key (str "row" + y)}
+       [:tr
+        (for [x (range 0 n)]
+          ^{:key (str "cell" + x + y)}
+          [:td
+           [:input {:value         (game/get-val @game x y)
+                    :type          "button"
+                    :style         {:font-size       "8em"
+                                    :backgroundColor "#deadbeef"
+                                    :width           "1em"
+                                    :height          "1em"
+                                    :text-align      "center"
+                                    :border-style    "solid"}
+                    :on-mouse-over #(js/console.log x y (game/get-val @game x y))
+                    :on-click      #(js/console.log (str (swap! game game/make-move x y)))}]])])]]])
 
 (defn game-page []
   [:div
