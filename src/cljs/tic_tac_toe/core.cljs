@@ -8,7 +8,7 @@
 ;; -------------------------
 ;; Views
 
-(def n 3)
+(def n 10)
 (def game (reagent/atom (game/init n)))
 
 (defn game-board []
@@ -22,7 +22,7 @@
         (for [x (range 0 n)]
           ^{:key (str "cell" + x + y)}
           [:td
-           [:input {:value         (game/get-val @game x y)
+           [:input {:value         (game/get-marker (game/get-val @game x y))
                     :type          "button"
                     :style         {:font-size       (str (max 2 (/ 9 n)) "em")
                                     :min-width       "1.5em"
