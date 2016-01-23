@@ -24,11 +24,17 @@
           [:td
            [:input {:value         (game/get-val @game x y)
                     :type          "button"
-                    :style         {:font-size       "3em"
-                                    :backgroundColor "#deadbeef"
-                                    :min-width       "3em"
-                                    :min-height      "3em"
-                                    :border-style    "solid"}
+                    :style         {:font-size       (str (max 2 (/ 9 n)) "em")
+                                    :min-width       "1.5em"
+                                    :width           (str (/ 9 n) "em")
+                                    :min-height      "1.5em"
+                                    :height          (str (/ 9 n) "em")
+                                    :backgroundColor "#ffffff"
+                                    :border-color    "#bbbbbb"
+                                    :border-width    "0.1em"
+                                    :border-style    (if (nil? (game/get-val @game x y))
+                                                       "solid"
+                                                       "groove")}
                     :on-mouse-over #(js/console.log x y (game/get-val @game x y))
                     :on-click      #(js/console.log (str (swap! game game/make-move x y)))}]])])]]])
 
