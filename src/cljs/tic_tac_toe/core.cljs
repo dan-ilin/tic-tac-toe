@@ -8,7 +8,7 @@
 ;; -------------------------
 ;; Views
 
-(def n 10)
+(def n 3)
 (def game (reagent/atom (game/init n)))
 
 (defn game-board []
