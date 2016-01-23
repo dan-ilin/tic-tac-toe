@@ -24,11 +24,10 @@
           [:td
            [:input {:value         (game/get-val @game x y)
                     :type          "button"
-                    :style         {:font-size       "8em"
+                    :style         {:font-size       "3em"
                                     :backgroundColor "#deadbeef"
-                                    :width           "1em"
-                                    :height          "1em"
-                                    :text-align      "center"
+                                    :min-width       "3em"
+                                    :min-height      "3em"
                                     :border-style    "solid"}
                     :on-mouse-over #(js/console.log x y (game/get-val @game x y))
                     :on-click      #(js/console.log (str (swap! game game/make-move x y)))}]])])]]])
