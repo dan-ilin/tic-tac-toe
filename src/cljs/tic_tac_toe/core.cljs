@@ -14,6 +14,8 @@
 (defn game-board []
   @game
   [:div
+   (if (:winner? @game)
+     [:h1 (str (:player @game) " wins!")])
    [:table
     [:tbody
      (for [y (range 0 n)]
@@ -22,7 +24,7 @@
         (for [x (range 0 n)]
           ^{:key (str "cell" + x + y)}
           [:td
-           [:input {:value         (game/get-marker (game/get-val @game x y))
+           [:input {:value         (game/get-val @game x y)
                     :type          "button"
                     :style         {:font-size       (str (max 2 (/ 9 n)) "em")
                                     :min-width       "1.5em"
