@@ -28,7 +28,8 @@
     (vec (map #(nth % x) board))))
 
 (defn get-diagonal-rows [board n]
-  [[nil nil nil] [nil nil nil]])
+  [(vec (map #(nth (nth board %) %) (range 0 n)))
+   (vec (map #(nth (nth board %) (- (- n 1) %)) (range 0 n)))])
 
 (defn winner? [game board player]
   (let [horizontal (get-horizontal-rows board)
