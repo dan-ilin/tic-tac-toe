@@ -14,9 +14,20 @@
 (defn game-board []
   @game
   [:div
-   (if (:winner? @game)
-     [:h1 (str (:player @game) " wins!")])
    [:table
+    [:thead
+     (if (:winner? @game)
+       [:tr
+        [:th
+         [:input {:style    {:backgroundColor "#ffffff"
+                             :border-color    "#bbbbbb"
+                             :border-width    "0.1em"
+                             :border-style    "solid"}
+                  :type     "button"
+                  :value    "Reset"
+                  :on-click #(reset! game (game/init n))}]]
+        [:th
+         [:h1 (str (:player @game) " wins!")]]])]
     [:tbody
      (for [y (range 0 n)]
        ^{:key (str "row" + y)}
