@@ -8,40 +8,50 @@
 ;; -------------------------
 ;; Views
 
-(def n 3)
-(def game (reagent/atom (game/init n)))
+(def n (reagent/atom 3))
+(def game (reagent/atom (game/init @n)))
 
 (defn game-board []
-  @game
+  @game @n
   [:div
    [:table
     [:thead
-     (if (:winner? @game)
-       [:tr
-        [:th
-         [:input {:style    {:backgroundColor "#ffffff"
-                             :border-color    "#bbbbbb"
-                             :border-width    "0.1em"
-                             :border-style    "solid"}
-                  :type     "button"
-                  :value    "Reset"
-                  :on-click #(reset! game (game/init n))}]]
-        [:th
-         [:h1 (str (:player @game) " wins!")]]])]
+     [:h1
+      (if (:winner? @game)
+        (str (:player @game) " wins!")
+        "TicTacToe")]
+     [:tr
+      [:th
+       [:input {:type      "number"
+                :value     @n
+                :min 3
+                :max 10
+                :length 3
+                :on-change #(reset! n (-> % .-target .-value js/Number))}]]
+      [:th
+       [:input {:style    {:backgroundColor "#ffffff"
+                           :border-color    "#bbbbbb"
+                           :border-width    "0.1em"
+                           :border-style    "solid"}
+                :type     "button"
+                :value    "Reset"
+                :on-click #(reset! game (game/init @n))}]]
+
+      [:th]]]
     [:tbody
-     (for [y (range 0 n)]
+     (for [y (range 0 (:n @game))]
        ^{:key (str "row" + y)}
        [:tr
-        (for [x (range 0 n)]
+        (for [x (range 0 (:n @game))]
           ^{:key (str "cell" + x + y)}
           [:td
            [:input {:value         (game/get-val @game x y)
                     :type          "button"
-                    :style         {:font-size       (str (max 2 (/ 9 n)) "em")
+                    :style         {:font-size       (str (max 2 (/ 9 (:n @game))) "em")
                                     :min-width       "1.5em"
-                                    :width           (str (/ 9 n) "em")
+                                    :width           (str (/ 9 (:n @game)) "em")
                                     :min-height      "1.5em"
-                                    :height          (str (/ 9 n) "em")
+                                    :height          (str (/ 9 (:n @game)) "em")
                                     :backgroundColor "#ffffff"
                                     :border-color    "#bbbbbb"
                                     :border-width    "0.1em"
