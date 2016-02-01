@@ -2,6 +2,7 @@
 
 (defn init [n]
   {:n       n
+   :score   {:X 0 :O 0}
    :winner? false
    :player  "X"
    :board   (vec (doall (repeat n (vec (doall (repeat n nil))))))})
@@ -51,8 +52,12 @@
         winner (winner? game out-board in-player)
         out-player (if (and valid (not winner))
                      (update-player in-player)
-                     in-player)]
+                     in-player)
+        out-score (if winner
+                    (assoc (:score game) (keyword in-player) (inc (get (:score game) (keyword in-player))))
+                    (:score game))]
     {:n       (:n game)
+     :score   out-score
      :winner? winner
      :player  out-player
      :board   out-board}))

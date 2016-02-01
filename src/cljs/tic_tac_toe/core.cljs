@@ -22,13 +22,14 @@
         "TicTacToe")]
      [:tr
       [:th
-       [:input {:type      "number"
-                :value     @n
-                :min 3
-                :max 10
-                :length 3
-                :on-change #(reset! n (-> % .-target .-value js/Number))}]]
+       [:p (str "X: " (:X (:score @game)))]]
       [:th
+       ;[:input {:type      "number"
+       ;         :value     @n
+       ;         :min       3
+       ;         :max       10
+       ;         :length    3
+       ;         :on-change #(reset! n (-> % .-target .-value js/Number))}]
        [:input {:style    {:backgroundColor "#ffffff"
                            :border-color    "#bbbbbb"
                            :border-width    "0.1em"
@@ -36,8 +37,8 @@
                 :type     "button"
                 :value    "Reset"
                 :on-click #(reset! game (game/init @n))}]]
-
-      [:th]]]
+      [:th
+       [:p (str "O: " (:O (:score @game)))]]]]
     [:tbody
      (for [y (range 0 (:n @game))]
        ^{:key (str "row" + y)}
@@ -47,11 +48,9 @@
           [:td
            [:input {:value         (game/get-val @game x y)
                     :type          "button"
-                    :style         {:font-size       (str (max 2 (/ 9 (:n @game))) "em")
-                                    :min-width       "1.5em"
-                                    :width           (str (/ 9 (:n @game)) "em")
-                                    :min-height      "1.5em"
-                                    :height          (str (/ 9 (:n @game)) "em")
+                    :style         {:font-size       "3em"
+                                    :width           "3em"
+                                    :height          "3em"
                                     :backgroundColor "#ffffff"
                                     :border-color    "#bbbbbb"
                                     :border-width    "0.1em"
