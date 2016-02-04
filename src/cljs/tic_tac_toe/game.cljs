@@ -1,11 +1,21 @@
 (ns tic-tac-toe.game)
 
+(defn clear-board [n]
+  (vec (doall (repeat n (vec (doall (repeat n nil)))))))
+
 (defn init [n]
   {:n       n
-   :score   {:X 0 :O 0}
+   :score   {:X 0 :Y 0}
    :winner? false
    :player  "X"
-   :board   (vec (doall (repeat n (vec (doall (repeat n nil))))))})
+   :board   (clear-board n)})
+
+(defn reset-board [n game]
+  {:n       n
+   :score   (:score game)
+   :winner? false
+   :player  (:player game)
+   :board   (clear-board n)})
 
 (defn get-val [game x y]
   (nth (nth (:board game) y) x " "))

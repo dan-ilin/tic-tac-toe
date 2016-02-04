@@ -24,19 +24,22 @@
       [:th
        [:p (str "X: " (:X (:score @game)))]]
       [:th
-       ;[:input {:type      "number"
-       ;         :value     @n
-       ;         :min       3
-       ;         :max       10
-       ;         :length    3
-       ;         :on-change #(reset! n (-> % .-target .-value js/Number))}]
        [:input {:style    {:backgroundColor "#ffffff"
                            :border-color    "#bbbbbb"
                            :border-width    "0.1em"
                            :border-style    "solid"}
                 :type     "button"
                 :value    "Reset"
-                :on-click #(reset! game (game/init @n))}]]
+                :on-click #(reset! game (game/init @n))}]
+
+       [:input {:style    {:backgroundColor "#ffffff"
+                           :border-color    "#bbbbbb"
+                           :border-width    "0.1em"
+                           :border-style    "solid"}
+                :type     "button"
+                :value    "Next Game"
+                :disabled (not (:winner? @game))
+                :on-click #(reset! game (game/reset-board @n @game))}]]
       [:th
        [:p (str "O: " (:O (:score @game)))]]]]
     [:tbody
@@ -48,6 +51,7 @@
           [:td
            [:input {:value         (game/get-val @game x y)
                     :type          "button"
+                    :disabled      (:winner? @game)
                     :style         {:font-size       "3em"
                                     :width           "3em"
                                     :height          "3em"
