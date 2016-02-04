@@ -5,7 +5,7 @@
 
 (defn init [n]
   {:n       n
-   :score   {:X 0 :Y 0}
+   :score   {:X 0 :O 0}
    :winner? false
    :player  "X"
    :board   (clear-board n)})
