@@ -19,7 +19,9 @@
      [:h1
       (if (:winner? @game)
         (str (:player @game) " wins!")
-        "TicTacToe")]
+        (if (:tie? @game)
+          "Tie!"
+          "TicTacToe"))]
      [:tr
       [:th
        [:p (str "X: " (:X (:score @game)))]]
@@ -38,7 +40,7 @@
                            :border-style    "solid"}
                 :type     "button"
                 :value    "Next Game"
-                :disabled (not (:winner? @game))
+                :disabled (and (not (:winner? @game)) (not (:tie? @game)))
                 :on-click #(reset! game (game/reset-board @n @game))}]]
       [:th
        [:p (str "O: " (:O (:score @game)))]]]]

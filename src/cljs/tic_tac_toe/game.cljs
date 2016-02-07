@@ -7,6 +7,7 @@
   {:n       n
    :score   {:X 0 :O 0}
    :winner? false
+   :tie?    false
    :player  "X"
    :board   (clear-board n)})
 
@@ -14,8 +15,13 @@
   {:n       n
    :score   (:score game)
    :winner? false
+   :tie?    false
    :player  (:player game)
    :board   (clear-board n)})
+
+(defn board-full? [board]
+  (reduce #(and %1 %2)
+          (map #(every? (fn [x] (not (nil? x))) %) board)))
 
 (defn get-val [game x y]
   (nth (nth (:board game) y) x " "))
@@ -69,5 +75,6 @@
     {:n       (:n game)
      :score   out-score
      :winner? winner
+     :tie?    (and (not winner) (board-full? out-board))
      :player  out-player
      :board   out-board}))
